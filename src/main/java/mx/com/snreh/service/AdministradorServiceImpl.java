@@ -1,6 +1,6 @@
 package mx.com.snreh.service;
 
-import mx.com.snreh.iservice.IAdministrador;
+import mx.com.snreh.repository.IAdministrador;
 import mx.com.snreh.model.AdministradorModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

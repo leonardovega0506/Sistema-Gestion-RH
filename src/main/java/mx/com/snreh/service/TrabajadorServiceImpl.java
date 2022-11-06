@@ -1,6 +1,6 @@
 package mx.com.snreh.service;
 
-import mx.com.snreh.iservice.ITrabajador;
+import mx.com.snreh.repository.ITrabajador;
 import mx.com.snreh.model.TrabajadorModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

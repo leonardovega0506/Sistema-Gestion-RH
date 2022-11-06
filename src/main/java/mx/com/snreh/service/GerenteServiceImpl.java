@@ -1,6 +1,6 @@
 package mx.com.snreh.service;
 
-import mx.com.snreh.iservice.IGerente;
+import mx.com.snreh.repository.IGerente;
 import mx.com.snreh.model.GerenteModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
