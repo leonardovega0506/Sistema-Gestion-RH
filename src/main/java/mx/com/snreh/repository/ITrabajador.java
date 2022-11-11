@@ -1,7 +1,7 @@
-package mx.com.snreh.iservice;
+package mx.com.snreh.repository;
 
-import mx.com.snreh.model.TrabajadorModel;
+import mx.com.snreh.model.TareaModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ITrabajador extends JpaRepository<TrabajadorModel, Integer> {
+public interface ITrabajador extends JpaRepository<TareaModel, Long> {
 }
