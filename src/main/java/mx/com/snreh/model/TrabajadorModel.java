@@ -15,7 +15,7 @@ public class TrabajadorModel {
     private long id_trabajador;
 
     @Column(name = "numero_trabajador",nullable = false)
-    private long numero_trabajador;
+    private long numeroTrabajador;
 
     @Column(name="nombre_trabajador",nullable = false)
     private String nombre_trabajador;
@@ -41,7 +41,7 @@ public class TrabajadorModel {
     @Column(name = "puesto_trabajador",nullable = false)
     private String puesto;
 
-    @OneToMany(mappedBy = "trabajadorModel",cascade = CascadeType.ALL,orphanRemoval = true)
-    private Set<TareaModel> tareas = new HashSet<>();
+    /*@OneToMany(mappedBy = "trabajadorModel",cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<TareaModel> tareas = new HashSet<>();*/
 
 }
