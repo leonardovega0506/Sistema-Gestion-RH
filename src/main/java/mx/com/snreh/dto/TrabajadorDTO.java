@@ -14,7 +14,7 @@ public class TrabajadorDTO {
 
     @NotEmpty(message = "El numero del trabajador no puede estar vacio")
     @Size(min = 2,message = "Debe de tener al menos 2 caracteres el numero de trabajador")
-    private long numero_trabajador;
+    private long numeroTrabajador;
 
     @NotEmpty(message = "El nombre no puede estar vacio")
     @Size(min = 2,message = "Debe de tener al menos 2 caracteres el nombre del trabajador")
