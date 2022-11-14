@@ -32,8 +32,9 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     }
 
     @Override
-    public TrabajadorRespuesta obtenerTrabajadores(int numeroPagina, int sizePagina) {
-        Pageable pageable = PageRequest.of(numeroPagina,sizePagina);
+    public TrabajadorRespuesta obtenerTrabajadores(int numeroPagina, int sizePagina, String orderBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?Sort.by(orderBy).ascending():Sort.by(orderBy).descending();
+        Pageable pageable = PageRequest.of(numeroPagina,sizePagina,sort);
         Page<TrabajadorModel> trabajadores = iTrabajador.findAll(pageable);
         List<TrabajadorModel> listaTrabajadores = trabajadores.getContent();
         List<TrabajadorDTO> contenido = listaTrabajadores.stream().map(trabajador -> mapearDTO(trabajador)).collect(Collectors.toList());
@@ -48,14 +49,14 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     }
 
     @Override
-    public TrabajadorDTO obtenerTrabajadorById(long id) {
-        TrabajadorModel trabajadorModel = iTrabajador.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",id));
+    public TrabajadorDTO obtenerTrabajadorByNumeroTrabajador(long numero_trabajador) {
+        TrabajadorModel trabajadorModel = iTrabajador.findById(numero_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",numero_trabajador));
         return mapearDTO(trabajadorModel);
     }
 
     @Override
-    public TrabajadorDTO actualizarTrabajador(TrabajadorDTO trabajadorDTO, long id) {
-        TrabajadorModel trabajadorModel = iTrabajador.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",id));
+    public TrabajadorDTO actualizarTrabajador(TrabajadorDTO trabajadorDTO, long numero_trabajador) {
+        TrabajadorModel trabajadorModel = iTrabajador.findById(numero_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",numero_trabajador));
 
         trabajadorModel.setNombre_trabajador(trabajadorDTO.getNombre_trabajador());
         trabajadorModel.setApellidoP_trabajador(trabajadorDTO.getApellidoP_trabajador());
@@ -64,22 +65,21 @@ public class TrabajadorServiceImpl implements TrabajadorService {
         trabajadorModel.setSueldo(trabajadorDTO.getSueldo());
         trabajadorModel.setCelular(trabajadorDTO.getCelular());
         trabajadorModel.setCorreo_electronico(trabajadorDTO.getCorreo_electronico());
-        trabajadorModel.setNumeroTrabajador(trabajadorDTO.getNumeroTrabajador());
         TrabajadorModel trabajadorActualizado = iTrabajador.save(trabajadorModel);
 
         return mapearDTO(trabajadorActualizado);
     }
 
     @Override
-    public void eliminarTrabajador(long id) {
-        TrabajadorModel trabajadorModel = iTrabajador.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",id));
+    public void eliminarTrabajador(long numero_trabajador) {
+        TrabajadorModel trabajadorModel = iTrabajador.findById(numero_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",numero_trabajador));
         iTrabajador.delete(trabajadorModel);
     }
 
     private TrabajadorDTO mapearDTO(TrabajadorModel trabajadorModel){
         TrabajadorDTO trabajadorDTO = new TrabajadorDTO();
         trabajadorDTO.setId_trabajador(trabajadorModel.getId_trabajador());
-        trabajadorDTO.setNumeroTrabajador(trabajadorModel.getNumeroTrabajador());
+        trabajadorDTO.setNumero_trabajador(trabajadorModel.getNumero_trabajador());
         trabajadorDTO.setNombre_trabajador(trabajadorModel.getNombre_trabajador());
         trabajadorDTO.setApellidoP_trabajador(trabajadorModel.getApellidoP_trabajador());
         trabajadorDTO.setApellido_Mtrabajador(trabajadorModel.getApellidoM_trabajador());
@@ -93,7 +93,7 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     private TrabajadorModel mapearEntidad(TrabajadorDTO trabajadorDTO){
         TrabajadorModel trabajadorModel = new TrabajadorModel();
         trabajadorModel.setId_trabajador(trabajadorDTO.getId_trabajador());
-        trabajadorModel.setNumeroTrabajador(trabajadorDTO.getNumeroTrabajador());
+        trabajadorModel.setNumero_trabajador(trabajadorDTO.getNumero_trabajador());
         trabajadorModel.setNombre_trabajador(trabajadorDTO.getNombre_trabajador());
         trabajadorModel.setApellidoP_trabajador(trabajadorDTO.getApellidoP_trabajador());
         trabajadorModel.setApellidoM_trabajador(trabajadorDTO.getApellidoP_trabajador());
