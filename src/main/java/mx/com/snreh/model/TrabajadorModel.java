@@ -12,10 +12,10 @@ import java.util.Set;
 public class TrabajadorModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_trabajador;
+    private long id_trabajador;
 
     @Column(name = "numero_trabajador",nullable = false)
-    private Long numero_trabajador;
+    private long numero_trabajador;
 
     @Column(name="nombre_trabajador",nullable = false)
     private String nombre_trabajador;
