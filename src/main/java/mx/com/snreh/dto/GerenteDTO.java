@@ -9,11 +9,11 @@ import javax.validation.constraints.Size;
 @Data
 public class GerenteDTO {
 
-    private int id_gerente;
+    private long id_gerente;
 
     @NotEmpty(message = "No puede estar vacio el numero de gerente")
     @Size(min = 2,message = "Debe de tener al menos 2 caracteres")
-    private int numero_gerente;
+    private long numero_gerente;
 
     @NotEmpty(message = "No puede estar vacio el nombre del gerente")
     @Size(min = 2,message = "Debe de tener al menos 2 caracteres")
