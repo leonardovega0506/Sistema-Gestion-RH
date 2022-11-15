@@ -24,7 +24,7 @@ public class TareaController {
     }
 
     @GetMapping("{id_tarea}")
-    public ResponseEntity<TareaDTO> obtenerTareaByID(@PathVariable(value = "id_trabajasdor") long id_trabajador,@PathVariable(value = "id_tarea") long id_tarea){
+    public ResponseEntity<TareaDTO> obtenerTareaByID(@PathVariable(value = "id_trabajador") long id_trabajador,@PathVariable(value = "id_tarea") long id_tarea){
         TareaDTO tareaDTO = sTarea.obtenerTareaByID(id_trabajador,id_tarea);
         return new ResponseEntity<>(tareaDTO, HttpStatus.OK);
     }
