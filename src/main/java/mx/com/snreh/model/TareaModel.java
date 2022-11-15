@@ -23,7 +23,7 @@ public class TareaModel {
     @Column(name = "estatus_tarea")
     private String estatus;
 
-    /*@ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "numero_trabajador",nullable = false)
-    private TrabajadorModel trabajadorModel;*/
+    private TrabajadorModel trabajadorModel;
 }
