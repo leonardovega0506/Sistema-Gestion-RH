@@ -1,4 +1,4 @@
-package mx.com.snreh.service.implementation.interfaces;
+package mx.com.snreh.service.interfaces;
 
 import mx.com.snreh.dto.TareaDTO;
 
