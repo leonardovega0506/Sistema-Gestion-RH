@@ -59,7 +59,8 @@ public class TareaServiceImpl implements TareaService {
         if(tareaModel.getTrabajadorModel().getId_trabajador() == trabajadorModel.getId_trabajador()){
             tareaModel.setEstatus(tareaDTO.getEstatus());
             tareaModel.setFecha(tareaDTO.getFecha());
-            return mapearDTO(tareaModel);
+            TareaModel tareaActualizada = iTarea.save(tareaModel);
+            return mapearDTO(tareaActualizada);
         }
         else {
             throw new SNRHEException(HttpStatus.BAD_REQUEST,"Esta tarea no esta asignada a este trabajador");
