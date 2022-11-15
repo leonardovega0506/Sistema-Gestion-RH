@@ -36,7 +36,7 @@ public class TareaServiceImpl implements TareaService {
 
     @Override
     public List<TareaDTO> obtenerTareasTrabajador(long id_trabjador) {
-        List<TareaModel> tareas = iTarea.findByTrabajadorId(id_trabjador);
+        List<TareaModel> tareas = iTarea.findByTrabajadorModelId(id_trabjador);
         return tareas.stream().map(tarea -> mapearDTO(tarea)).collect(Collectors.toList());
     }
 
@@ -44,7 +44,7 @@ public class TareaServiceImpl implements TareaService {
     public TareaDTO obtenerTareaByID(long id_trabajador, long id_tarea) {
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",id_trabajador));
         TareaModel tareaModel = iTarea.findById(id_tarea).orElseThrow(() -> new ResourceNotFoundException("Tarea","Id_tarea",id_tarea));
-        if(tareaModel.getTrabajadorModel().getId_trabajador() == trabajadorModel.getId_trabajador()){
+        if(tareaModel.getTrabajadorModel().getId() == trabajadorModel.getId()){
             return mapearDTO(tareaModel);
         }
         else {
@@ -56,7 +56,8 @@ public class TareaServiceImpl implements TareaService {
     public TareaDTO actualizarTarea(long id_trabajador, long id_tarea, TareaDTO tareaDTO) {
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",id_trabajador));
         TareaModel tareaModel = iTarea.findById(id_tarea).orElseThrow(() -> new ResourceNotFoundException("Tarea","Id_tarea",id_tarea));
-        if(tareaModel.getTrabajadorModel().getId_trabajador() == trabajadorModel.getId_trabajador()){
+        if(tareaModel.getTrabajadorModel().getId() == trabajadorModel.getId()){
+            tareaModel.setNombre(tareaDTO.getNombre());
             tareaModel.setEstatus(tareaDTO.getEstatus());
             tareaModel.setFecha(tareaDTO.getFecha());
             TareaModel tareaActualizada = iTarea.save(tareaModel);
@@ -82,7 +83,7 @@ public class TareaServiceImpl implements TareaService {
         tareaModel.setId_Tarea(tareaDTO.getId_Tarea());
         tareaModel.setFecha(tareaDTO.getFecha());
         tareaModel.setEstatus(tareaDTO.getEstatus());
-        tareaModel.setNombre(tareaModel.getNombre());
+        tareaModel.setNombre(tareaDTO.getNombre());
 
         return tareaModel;
     }
