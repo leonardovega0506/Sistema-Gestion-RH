@@ -13,10 +13,10 @@ public class GerenteModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_gerente;
+    private long id_gerente;
 
     @Column(name = "numero_gerente",nullable = false)
-    private int numero_gerente;
+    private long numero_gerente;
 
     @Column(name = "nombre_gerente",nullable = false)
     private String nombre_gerente;
