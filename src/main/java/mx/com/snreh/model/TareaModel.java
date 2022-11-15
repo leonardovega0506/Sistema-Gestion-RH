@@ -24,6 +24,6 @@ public class TareaModel {
     private String estatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "numero_trabajador",nullable = false)
+    @JoinColumn(name = "id_trabajador",nullable = false)
     private TrabajadorModel trabajadorModel;
 }
