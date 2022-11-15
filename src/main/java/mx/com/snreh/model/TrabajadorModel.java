@@ -12,11 +12,10 @@ import java.util.Set;
 public class TrabajadorModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_trabajador")
-    private long id;
+    private int id_trabajador;
 
     @Column(name = "numero_trabajador",nullable = false)
-    private long numeroTrabajador;
+    private Long numero_trabajador;
 
     @Column(name="nombre_trabajador",nullable = false)
     private String nombre_trabajador;
@@ -45,21 +44,4 @@ public class TrabajadorModel {
     @OneToMany(mappedBy = "trabajadorModel",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<TareaModel> tareas = new HashSet<>();
 
-
-    public TrabajadorModel() {
-    }
-
-    public TrabajadorModel(long id_trabajador, long numeroTrabajador, String nombre_trabajador, String apellidoP_trabajador, String apellidoM_trabajador, double sueldo, String estatus, String celular, String correo_electronico, String puesto, Set<TareaModel> tareas) {
-        this.id = id_trabajador;
-        this.numeroTrabajador = numeroTrabajador;
-        this.nombre_trabajador = nombre_trabajador;
-        this.apellidoP_trabajador = apellidoP_trabajador;
-        this.apellidoM_trabajador = apellidoM_trabajador;
-        this.sueldo = sueldo;
-        this.estatus = estatus;
-        this.celular = celular;
-        this.correo_electronico = correo_electronico;
-        this.puesto = puesto;
-        this.tareas = tareas;
-    }
 }
