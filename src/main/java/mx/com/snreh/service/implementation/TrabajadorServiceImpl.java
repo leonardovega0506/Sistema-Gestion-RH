@@ -78,7 +78,7 @@ public class TrabajadorServiceImpl implements TrabajadorService {
 
     private TrabajadorDTO mapearDTO(TrabajadorModel trabajadorModel){
         TrabajadorDTO trabajadorDTO = new TrabajadorDTO();
-        trabajadorDTO.setId_trabajador(trabajadorModel.getId_trabajador());
+        trabajadorDTO.setId_trabajador(trabajadorModel.getId());
         trabajadorDTO.setNumeroTrabajador(trabajadorModel.getNumeroTrabajador());
         trabajadorDTO.setNombre_trabajador(trabajadorModel.getNombre_trabajador());
         trabajadorDTO.setApellidoP_trabajador(trabajadorModel.getApellidoP_trabajador());
@@ -92,7 +92,7 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     }
     private TrabajadorModel mapearEntidad(TrabajadorDTO trabajadorDTO){
         TrabajadorModel trabajadorModel = new TrabajadorModel();
-        trabajadorModel.setId_trabajador(trabajadorDTO.getId_trabajador());
+        trabajadorModel.setId(trabajadorDTO.getId_trabajador());
         trabajadorModel.setNumeroTrabajador(trabajadorDTO.getNumeroTrabajador());
         trabajadorModel.setNombre_trabajador(trabajadorDTO.getNombre_trabajador());
         trabajadorModel.setApellidoP_trabajador(trabajadorDTO.getApellidoP_trabajador());
