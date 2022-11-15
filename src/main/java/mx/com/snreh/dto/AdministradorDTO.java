@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 public class AdministradorDTO {
 
 
-    private int id_administrador;
+    private long id_administrador;
 
     @NotEmpty(message = "No puede estar vacio el usuario")
     @Size(min = 10, message = "El Usuaurio debe tener al menos 10 caracteres")
