@@ -3,6 +3,8 @@ package mx.com.snreh.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -11,7 +13,8 @@ public class GerenteModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_gerente;
+    @Column(name = "id_gerente")
+    private Long id;
 
     @Column(name = "numero_gerente",nullable = false)
     private long numero_gerente;
@@ -39,4 +42,7 @@ public class GerenteModel {
 
     @Column(name = "puesto_gerente")
     private String puesto;
+
+    @OneToMany(mappedBy = "gerenteModel",cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<EventosModel> eventos = new HashSet<>();
 }

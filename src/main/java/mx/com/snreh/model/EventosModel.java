@@ -12,7 +12,7 @@ public class EventosModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "fecha_evento",nullable = false)
     private Date fecha_evento;
@@ -25,4 +25,8 @@ public class EventosModel {
 
     @Column(name = "cuerpo_evento",nullable = false)
     private String cuerpo_evento;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_gerente", nullable = false)
+    private GerenteModel gerenteModel;
 }

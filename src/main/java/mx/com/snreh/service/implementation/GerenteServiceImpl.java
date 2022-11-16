@@ -77,7 +77,7 @@ public class GerenteServiceImpl implements GerenteService {
 
     public GerenteDTO mapearDTO(GerenteModel gerenteModel) {
         GerenteDTO gerenteDTO = new GerenteDTO();
-        gerenteDTO.setId_gerente(gerenteModel.getId_gerente());
+        gerenteDTO.setId_gerente(gerenteModel.getId());
         gerenteDTO.setNumero_gerente(gerenteModel.getNumero_gerente());
         gerenteDTO.setNombre_gerente(gerenteModel.getNombre_gerente());
         gerenteDTO.setApellidoP_gerente(gerenteModel.getApellidoP_gerente());
@@ -92,7 +92,7 @@ public class GerenteServiceImpl implements GerenteService {
 
     public GerenteModel mapearEntidad(GerenteDTO gerenteDTO) {
         GerenteModel gerenteModel = new GerenteModel();
-        gerenteModel.setId_gerente(gerenteDTO.getId_gerente());
+        gerenteModel.setId(gerenteDTO.getId_gerente());
         gerenteModel.setNumero_gerente(gerenteDTO.getNumero_gerente());
         gerenteModel.setNombre_gerente(gerenteDTO.getNombre_gerente());
         gerenteModel.setApellidoP_gerente(gerenteDTO.getApellidoP_gerente());
