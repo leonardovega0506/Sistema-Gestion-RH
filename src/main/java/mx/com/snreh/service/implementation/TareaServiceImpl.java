@@ -7,7 +7,7 @@ import mx.com.snreh.model.TareaModel;
 import mx.com.snreh.model.TrabajadorModel;
 import mx.com.snreh.repository.ITarea;
 import mx.com.snreh.repository.ITrabajador;
-import mx.com.snreh.service.interfaces.TareaService;
+import mx.com.snreh.service.implementation.interfaces.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
