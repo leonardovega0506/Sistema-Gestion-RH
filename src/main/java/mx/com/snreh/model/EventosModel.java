@@ -25,4 +25,8 @@ public class EventosModel {
 
     @Column(name = "cuerpo_evento",nullable = false)
     private String cuerpo_evento;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_gerente", nullable = false)
+    private GerenteModel gerenteModel;
 }
