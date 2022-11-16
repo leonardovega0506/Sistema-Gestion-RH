@@ -1,7 +1,7 @@
 package mx.com.snreh.controller;
 
 import mx.com.snreh.dto.TareaDTO;
-import mx.com.snreh.service.interfaces.TareaService;
+import mx.com.snreh.service.implementation.interfaces.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

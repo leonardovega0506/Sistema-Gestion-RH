@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class EventoServiceImpl implements EventoService {
 
-    @Autowired
+    @Autowired(required = false)
     private ModelMapper modelMapper;
 
     @Autowired
