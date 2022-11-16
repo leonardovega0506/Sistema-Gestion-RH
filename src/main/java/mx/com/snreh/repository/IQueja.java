@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IQueja extends JpaRepository<QuejasAclaracionesModel, Long> {
-    public List<TareaModel> findByTrabajadorModelId(long id_trabajador);
+    public List<QuejasAclaracionesModel> findByTrabajadorModelId(long id_trabajador);
 }
