@@ -3,6 +3,8 @@ package mx.com.snreh.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -39,4 +41,7 @@ public class GerenteModel {
 
     @Column(name = "puesto_gerente")
     private String puesto;
+
+    @OneToMany(mappedBy = "gerenteModel",cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<EventosModel> eventos = new HashSet<>();
 }
