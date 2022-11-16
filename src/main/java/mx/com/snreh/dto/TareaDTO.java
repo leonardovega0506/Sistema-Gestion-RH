@@ -1,7 +1,7 @@
-
 package mx.com.snreh.dto;
 
 import lombok.Data;
+import mx.com.snreh.model.TrabajadorModel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
