@@ -48,6 +48,6 @@ public class TrabajadorModel {
     private Set<RetardoTrabajadorModel> retardos = new HashSet<>();
 
     @OneToMany(mappedBy = "trabajadorModel",cascade = CascadeType.ALL,orphanRemoval = true)
-    private Set<QuejasAclaracionesModel> quejas = new HashSet<>();
+    private Set<QuejasAclaracionesModel> listaQuejas = new HashSet<>();
 
 }
