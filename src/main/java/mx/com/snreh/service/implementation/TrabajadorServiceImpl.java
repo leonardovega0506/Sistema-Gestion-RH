@@ -63,7 +63,7 @@ public class TrabajadorServiceImpl implements TrabajadorService {
         trabajadorModel.setSueldo(trabajadorDTO.getSueldo());
         trabajadorModel.setCelular(trabajadorDTO.getCelular());
         trabajadorModel.setCorreo_electronico(trabajadorDTO.getCorreo_electronico());
-        trabajadorModel.setNumeroTrabajador(trabajadorDTO.getNumeroTrabajador());
+        trabajadorModel.setNumero_trabajador(trabajadorDTO.getNumeroTrabajador());
         TrabajadorModel trabajadorActualizado = iTrabajador.save(trabajadorModel);
 
         return mapearDTO(trabajadorActualizado);
@@ -78,7 +78,7 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     private TrabajadorDTO mapearDTO(TrabajadorModel trabajadorModel){
         TrabajadorDTO trabajadorDTO = new TrabajadorDTO();
         trabajadorDTO.setId(trabajadorModel.getId());
-        trabajadorDTO.setNumeroTrabajador(trabajadorModel.getNumeroTrabajador());
+        trabajadorDTO.setNumeroTrabajador(trabajadorModel.getNumero_trabajador());
         trabajadorDTO.setNombre_trabajador(trabajadorModel.getNombre_trabajador());
         trabajadorDTO.setApellidoP_trabajador(trabajadorModel.getApellidoP_trabajador());
         trabajadorDTO.setApellido_Mtrabajador(trabajadorModel.getApellidoM_trabajador());
@@ -92,7 +92,7 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     private TrabajadorModel mapearEntidad(TrabajadorDTO trabajadorDTO){
         TrabajadorModel trabajadorModel = new TrabajadorModel();
         trabajadorModel.setId(trabajadorDTO.getId());
-        trabajadorModel.setNumeroTrabajador(trabajadorDTO.getNumeroTrabajador());
+        trabajadorModel.setNumero_trabajador(trabajadorDTO.getNumeroTrabajador());
         trabajadorModel.setNombre_trabajador(trabajadorDTO.getNombre_trabajador());
         trabajadorModel.setApellidoP_trabajador(trabajadorDTO.getApellidoP_trabajador());
         trabajadorModel.setApellidoM_trabajador(trabajadorDTO.getApellidoP_trabajador());
