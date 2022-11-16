@@ -1,8 +1,8 @@
 package mx.com.snreh.controller;
 
 import mx.com.snreh.dto.TrabajadorDTO;
-import mx.com.snreh.respuesta.TrabajadorRespuesta;
-import mx.com.snreh.service.interfaces.TrabajadorService;
+import mx.com.snreh.response.TrabajadorRespuesta;
+import mx.com.snreh.service.implementation.interfaces.TrabajadorService;
 import mx.com.snreh.util.ConstantesGlobales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
