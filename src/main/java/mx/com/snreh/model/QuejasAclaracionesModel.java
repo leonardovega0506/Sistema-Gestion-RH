@@ -25,4 +25,9 @@ public class QuejasAclaracionesModel {
 
     @Column(name = "estatus_queja",nullable = false)
     private String estatus_queja;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_trabajador",nullable = false)
+    private TrabajadorModel trabajadorModel;
 }
+
