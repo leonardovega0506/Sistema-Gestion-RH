@@ -20,8 +20,13 @@ public class IncidenciaModel {
     @Column(name = "nombre_incidencia")
     private String nombre_incidencia;
 
-    //private String evidencia_incidencia;
+    @Column(name = "evidencia_incidencia")
+    private String evidencia_incidencia;
 
     @Column(name = "fecha_incidencia")
     private Date fecha_incidencia;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_trabajador",nullable = false)
+    private TrabajadorModel trabajadorModel;
 }
