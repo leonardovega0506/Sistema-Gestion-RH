@@ -23,7 +23,7 @@ public class HoraExtraModel {
     @Column(name = "costo_hora",nullable = false)
     private double costo_hora;
 
-    @Column(name = "aumento_total",nullable = false)
+    @Column(name = "aumento_total")
     private double aumento_total;
 
     @ManyToOne(fetch = FetchType.LAZY)
