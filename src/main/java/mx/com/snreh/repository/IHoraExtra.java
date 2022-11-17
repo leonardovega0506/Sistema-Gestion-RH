@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IHoraExtra extends JpaRepository<HoraExtraModel,Long> {
-    public List<TareaModel> findByTrabajadorModelId(long id_trabajador);
+    public List<HoraExtraModel> findByTrabajadorModelId(long id_trabajador);
 }
