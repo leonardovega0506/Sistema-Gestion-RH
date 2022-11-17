@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class HoraExtraServiceImpl implements HoraExtraService {
 
-    @Autowired
+    @Autowired(required = false)
     private ModelMapper modelMapper;
 
     @Autowired
