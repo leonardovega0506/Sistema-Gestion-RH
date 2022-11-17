@@ -50,4 +50,6 @@ public class TrabajadorModel {
     @OneToMany(mappedBy = "trabajadorModel",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<QuejasAclaracionesModel> listaQuejas = new HashSet<>();
 
+    @OneToMany(mappedBy = "trabajadorModel",cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<HoraExtraModel> listaHorasExtra = new HashSet<>();
 }
