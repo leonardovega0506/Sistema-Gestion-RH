@@ -28,4 +28,8 @@ public class VacacionModel {
 
     @Column(name = "cantidad_dias_vacaciones",nullable = false)
     private int cantidad_dias;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_trabajador",nullable = false)
+    private TrabajadorModel trabajadorModel;
 }
