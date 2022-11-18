@@ -22,4 +22,8 @@ public class RenunciaTrabajadorModel {
 
     @Column(name = "finiquito",nullable = false)
     private double finiquito;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_trabajador")
+    private TrabajadorModel trabajadorModel;
 }

@@ -59,4 +59,7 @@ public class TrabajadorModel {
 
     @OneToMany(mappedBy = "trabajadorModel",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<NominaTrabajadorModel> listaNominas = new HashSet<>();
+
+    @OneToOne(mappedBy = "trabajadorModel",cascade = CascadeType.ALL,orphanRemoval = true)
+    private RenunciaTrabajadorModel renuncia;
 }
