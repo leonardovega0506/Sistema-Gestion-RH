@@ -17,9 +17,6 @@ public class NominaTrabajadorModel {
     @Column(name = "fecha_nomina_trabajador", nullable = false)
     private Date fechaNomina;
 
-    @Column(name = "nombre_nomina_trabajador",nullable = false)
-    private String nombreNomina;
-
     @Column(name = "nomina_trabajador",nullable = false)
     private double nomina_trabajador;
 
@@ -35,4 +32,7 @@ public class NominaTrabajadorModel {
     @Column(name = "cantidad_retardos",nullable = false)
     private int retardo_trabajador;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_trabajador",nullable = false)
+    private TrabajadorModel trabajadorModel;
 }
