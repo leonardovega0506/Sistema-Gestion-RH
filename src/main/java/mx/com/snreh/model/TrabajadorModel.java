@@ -65,4 +65,8 @@ public class TrabajadorModel {
 
     @OneToMany(mappedBy = "trabajadorModel",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<VacacionModel> listaVacaciones = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "turnos_trabajadores",joinColumns = @JoinColumn(name = "id_trabajador",referencedColumnName = "id_trabajador"),inverseJoinColumns = @JoinColumn(name = "turno_id", referencedColumnName = "id_turno"))
+    private Set<TurnosModel> turnos = new HashSet<>();
 }
