@@ -20,5 +20,4 @@ public class TurnosModel {
     @Column(name = "cantidad_horas",nullable = false)
     private int cantidad_horas;
 
-
 }
