@@ -1,5 +1,6 @@
 package mx.com.snreh.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -65,7 +66,8 @@ public class TrabajadorModel {
     @OneToMany(mappedBy = "trabajadorModel",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<VacacionModel> listaVacaciones = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "turnos_trabajadores",joinColumns = @JoinColumn(name = "id_trabajador",referencedColumnName = "id_trabajador"),inverseJoinColumns = @JoinColumn(name = "turno_id", referencedColumnName = "id_turno"))
+    @ManyToMany
+    @JoinTable(name = "turnos_trabajadores",joinColumns = @JoinColumn(name = "id_trabajador", referencedColumnName = "id_trabajador"),inverseJoinColumns = @JoinColumn(name = "id_turno",referencedColumnName = "id_turno"))
+    @JsonBackReference
     private Set<TurnosModel> turnos = new HashSet<>();
 }
