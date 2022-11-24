@@ -1,8 +1,11 @@
 package mx.com.snreh.dto;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
+@Data
 public class HoraExtraDTO {
 
     private long id_horaExtra;
