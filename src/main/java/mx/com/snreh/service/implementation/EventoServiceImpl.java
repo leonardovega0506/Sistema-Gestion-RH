@@ -18,10 +18,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class EventoServiceImpl implements EventoService {
-
-    @Autowired(required = false)
-    private ModelMapper modelMapper;
-
     @Autowired
     private IEvento iEvento;
 
@@ -93,11 +89,21 @@ public class EventoServiceImpl implements EventoService {
         iEvento.delete(eventosModel);
     }
     private EventoDTO mapearDTO(EventosModel eventosModel){
-        EventoDTO eventoDTO = modelMapper.map(eventosModel, EventoDTO.class);
+        EventoDTO eventoDTO = new EventoDTO();
+        eventoDTO.setCuerpo_evento(eventosModel.getCuerpo_evento());
+        eventoDTO.setFecha_evento(eventosModel.getFecha_evento());
+        eventoDTO.setTitulo_evento(eventosModel.getTitulo_evento());
+        eventoDTO.setTipo_evento(eventosModel.getTipo_evento());
+        eventoDTO.setId(eventosModel.getId());
         return eventoDTO;
     }
     private EventosModel mapearEntidad(EventoDTO eventoDTO){
-        EventosModel eventosModel = modelMapper.map(eventoDTO,EventosModel.class);
+        EventosModel eventosModel = new EventosModel();
+        eventosModel.setCuerpo_evento(eventoDTO.getCuerpo_evento());
+        eventosModel.setTitulo_evento(eventoDTO.getTitulo_evento());
+        eventosModel.setTipo_evento(eventoDTO.getTipo_evento());
+        eventosModel.setFecha_evento(eventoDTO.getFecha_evento());
+        eventosModel.setId(eventoDTO.getId());
         return eventosModel;
     }
 }
