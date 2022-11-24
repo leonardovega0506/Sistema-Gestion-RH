@@ -25,23 +25,28 @@ public class TareaServiceImpl implements TareaService {
     private ITrabajador iTrabajador;
 
     @Override
-    public TareaDTO crearTarea(long id_trabajador, TareaDTO tareaDTO) {
+    public TareaDTO createTarea(long id_trabajador, TareaDTO tareaDTO) {
         TareaModel tareaModel = mapearEntidad(tareaDTO);
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",id_trabajador));
-
+        trabajadorModel.setEstatus("Ocupado");
         tareaModel.setTrabajadorModel(trabajadorModel);
         TareaModel nuevaTarea = iTarea.save(tareaModel);
         return mapearDTO(nuevaTarea);
     }
 
     @Override
-    public List<TareaDTO> obtenerTareasTrabajador(long id_trabjador) {
+    public List<TareaDTO> findTareasTrabajador(long id_trabjador) {
         List<TareaModel> tareas = iTarea.findByTrabajadorModelId(id_trabjador);
+        return tareas.stream().map(tarea -> mapearDTO(tarea)).collect(Collectors.toList());
+    }
+    @Override
+    public List<TareaDTO> findAllTareas() {
+        List<TareaModel> tareas = iTarea.findAll();
         return tareas.stream().map(tarea -> mapearDTO(tarea)).collect(Collectors.toList());
     }
 
     @Override
-    public TareaDTO obtenerTareaByID(long id_trabajador, long id_tarea) {
+    public TareaDTO findTareaByID(long id_trabajador, long id_tarea) {
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",id_trabajador));
         TareaModel tareaModel = iTarea.findById(id_tarea).orElseThrow(() -> new ResourceNotFoundException("Tarea","Id_tarea",id_tarea));
         if(tareaModel.getTrabajadorModel().getId() == trabajadorModel.getId()){
@@ -53,18 +58,22 @@ public class TareaServiceImpl implements TareaService {
     }
 
     @Override
-    public TareaDTO actualizarTarea(long id_trabajador, long id_tarea, TareaDTO tareaDTO) {
+    public TareaDTO updateTarea(long id_trabajador, long id_tarea, TareaDTO tareaDTO) {
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",id_trabajador));
         TareaModel tareaModel = iTarea.findById(id_tarea).orElseThrow(() -> new ResourceNotFoundException("Tarea","Id_tarea",id_tarea));
         if(tareaModel.getTrabajadorModel().getId() == trabajadorModel.getId()){
+            trabajadorModel.setEstatus("Libre");
             tareaModel.setEstatus(tareaDTO.getEstatus());
             tareaModel.setFecha(tareaDTO.getFecha());
-            return mapearDTO(tareaModel);
+            tareaModel.setTrabajadorModel(trabajadorModel);
+            TareaModel tareaActualizada = iTarea.save(tareaModel);
+            return mapearDTO(tareaActualizada);
         }
         else {
             throw new SNRHEException(HttpStatus.BAD_REQUEST,"Esta tarea no esta asignada a este trabajador");
         }
     }
+
 
     private TareaDTO mapearDTO(TareaModel tareaModel){
         TareaDTO tareaDTO = new TareaDTO();
