@@ -1,7 +1,11 @@
 package mx.com.snreh.repository;
 
-import mx.com.snreh.model.TurnosTrabajadorModel;
+import mx.com.snreh.dto.TurnosTrabajadoresDTO;
+import mx.com.snreh.model.Turnos_Trabajador;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ITurnosTrabajadores extends JpaRepository<TurnosTrabajadorModel,Long> {
+@Repository
+public interface ITurnosTrabajadores extends JpaRepository<Turnos_Trabajador,Long> {
 }

@@ -72,11 +72,17 @@ public class TurnoServiceImpl implements TurnoService {
     }
 
     private TurnosDTO mapearDTO(TurnosModel turnosModel){
-        TurnosDTO turnosDTO = modelMapper.map(turnosModel,TurnosDTO.class);
+        TurnosDTO turnosDTO = new TurnosDTO();
+        turnosDTO.setId_turno(turnosModel.getId_turno());
+        turnosDTO.setTurno(turnosModel.getTurno());
+        turnosDTO.setCantidad_horas(turnosModel.getCantidad_horas());
         return turnosDTO;
     }
     private TurnosModel mapearEntidad(TurnosDTO turnosDTO){
-        TurnosModel turnosModel = modelMapper.map(turnosDTO,TurnosModel.class);
+        TurnosModel turnosModel = new TurnosModel();
+        turnosModel.setId_turno(turnosDTO.getId_turno());
+        turnosModel.setTurno(turnosDTO.getTurno());
+        turnosModel.setCantidad_horas(turnosDTO.getCantidad_horas());
         return turnosModel;
     }
 }
