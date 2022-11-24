@@ -41,6 +41,7 @@ public class RenunciaServiceImpl implements RenunciaService {
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
         trabajadorModel.setEstatus("Pendiente de renuncia");
         renunciaTrabajadorModel.setTrabajadorModel(trabajadorModel);
+        renunciaTrabajadorModel.setFiniquito(obtenerFiniquito(id_trabajador,renunciaDTO));
         RenunciaTrabajadorModel renuncia = iRenuncia.save(renunciaTrabajadorModel);
         return mapearDTO(renuncia);
     }
@@ -91,23 +92,29 @@ public class RenunciaServiceImpl implements RenunciaService {
         renunciaTrabajadorModel.setTiempoTrabajado((int) renunciaDTO.getTiempoTrabajado());
         return renunciaTrabajadorModel;
     }
-    private double obtenerFiniquito(long id_trabajador,long id_renuncia){
+    private double obtenerFiniquito(long id_trabajador, RenunciaDTO renunciaDTO){
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
+        RenunciaTrabajadorModel renunciaTrabajadorModel = mapearEntidad(renunciaDTO);
 
-        RenunciaTrabajadorModel renunciaTrabajadorModel = iRenuncia.findById(id_renuncia).orElseThrow(() -> new ResourceNotFoundException("Renuncia","Id",id_renuncia));
         renunciaTrabajadorModel.setTrabajadorModel(trabajadorModel);
         List<NominaTrabajadorModel> nominas = iNomina.findByTrabajadorModelId(id_trabajador);
 
-
-
         double sueldoDiario = trabajadorModel.getSueldo()/28;
-        double sueldoFinal = sueldoDiario * renunciaTrabajadorModel.getTiempoTrabajado();
+        double sueldoFinal = (sueldoDiario * renunciaTrabajadorModel.getTiempoTrabajado())+calcularNominas(id_trabajador);
         double aguinaldoDiario = sueldoDiario*15;
         double aguinaldoFiniquito = (aguinaldoDiario/365)* renunciaTrabajadorModel.getTiempoTrabajado();
         double vacacionesAdeudio = ((renunciaTrabajadorModel.getTiempoTrabajado()*sueldoDiario)/365) *sueldoDiario;
         double vacacionesfinal = vacacionesAdeudio*0.025;
-        double impuestos = ((vacacionesfinal+aguinaldoFiniquito+sueldoFinal)*nominas.get(0).getIsr())-nominas.get(0).getDescuento_retardo();
+        double impuestos = (vacacionesfinal+aguinaldoFiniquito+sueldoFinal) - (vacacionesfinal+aguinaldoFiniquito+sueldoFinal)*0.16;
         double finiquitoNeto = (vacacionesfinal+aguinaldoFiniquito+sueldoFinal)- impuestos;
         return  finiquitoNeto;
+    }
+    private double calcularNominas(long id_trabajador){
+        List<NominaTrabajadorModel> nominas = iNomina.findByTrabajadorModelId(id_trabajador);
+        double totalNomina = 0;
+        for(var nomina : nominas){
+            totalNomina += nomina.getNomina_trabajador();
+        }
+        return totalNomina;
     }
 }
