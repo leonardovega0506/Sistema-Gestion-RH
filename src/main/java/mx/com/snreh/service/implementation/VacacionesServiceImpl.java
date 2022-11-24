@@ -32,16 +32,21 @@ public class VacacionesServiceImpl implements VacacionesService {
     public VacacionesDTO createVacacion(long id_trabajador, VacacionesDTO vacacionesDTO) {
         VacacionModel vacacionModel =mapearEntidad(vacacionesDTO);
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Id",id_trabajador));
-
+        trabajadorModel.setEstatus("Pendiente de Aprobacion Vacaciones");
         vacacionModel.setTrabajadorModel(trabajadorModel);
         VacacionModel nuevaVacacion = iVacaciones.save(vacacionModel);
         return mapearDTO(nuevaVacacion);
     }
 
     @Override
-    public List<VacacionesDTO> findAllVacaciones(long id_trabajador) {
+    public List<VacacionesDTO> findAllVacacionesTrabajador(long id_trabajador) {
        List<VacacionModel> vacaciones = iVacaciones.findByTrabajadorModelId(id_trabajador);
         return vacaciones.stream().map(vacacion -> mapearDTO(vacacion)).collect(Collectors.toList());
+    }
+    @Override
+    public List<VacacionesDTO> findAllVacaciones() {
+        List<VacacionModel> vacaciones = iVacaciones.findAll();
+        return  vacaciones.stream().map(vacacion -> mapearDTO(vacacion)).collect(Collectors.toList());
     }
 
     @Override
@@ -63,6 +68,7 @@ public class VacacionesServiceImpl implements VacacionesService {
         if(!vacacionModel.getTrabajadorModel().getId().equals(trabajadorModel.getId())){
             throw new SNRHEException(HttpStatus.BAD_REQUEST,"Esta vacacion no esta asociada al trabajador");
         }
+        trabajadorModel.setEstatus("En Vacaciones");
         vacacionModel.setEstatus_vacacion(vacacionesDTO.getEstatus_vacacion());
         vacacionModel.setPrima_vacacional(vacacionesDTO.getPrima_vacacional());
         vacacionModel.setFecha_inicio(vacacionesDTO.getFecha_inicio());
@@ -83,6 +89,7 @@ public class VacacionesServiceImpl implements VacacionesService {
         }
         iVacaciones.delete(vacacionModel);
     }
+
 
     private VacacionesDTO mapearDTO(VacacionModel vacacionModel){
         VacacionesDTO vacacionesDTO = modelMapper.map(vacacionModel,VacacionesDTO.class);
