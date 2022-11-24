@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Data
 public class TrabajadorDTO {
 
-    private long id_trabajador;
+    private long id;
 
     @NotEmpty(message = "El numero del trabajador no puede estar vacio")
     @Size(min = 2,message = "Debe de tener al menos 2 caracteres el numero de trabajador")

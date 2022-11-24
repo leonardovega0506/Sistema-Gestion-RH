@@ -12,7 +12,7 @@ public class GerenteModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_gerente")
-    private long id;
+    private Long id;
 
     @Column(name = "numero_gerente",nullable = false)
     private long numero_gerente;

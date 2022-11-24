@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface IEvento extends JpaRepository {
+public interface IEvento extends JpaRepository<EventosModel, Long> {
 
-    public List<EventosModel> findByEventoModelId(long id_gerente);
+    public List<EventosModel> findByGerenteModelId(long id_gerente);
 }
