@@ -18,4 +18,7 @@ public class RenunciaDTO {
 
     @NotEmpty
     private double finiquito;
+
+    @NotEmpty
+    private long tiempoTrabajado;
 }
