@@ -19,9 +19,6 @@ import java.util.stream.Collectors;
 @Service
 public class QuejaServiceImpl implements QuejaService {
 
-    @Autowired(required = false)
-    private ModelMapper modelMapper;
-
     @Autowired
     private IQueja iQueja;
 
@@ -40,11 +37,15 @@ public class QuejaServiceImpl implements QuejaService {
     }
 
     @Override
-    public List<QuejasDTO> findAllQuejas(long id_trabajador) {
+    public List<QuejasDTO> findAllQuejasTrabajador(long id_trabajador) {
         List<QuejasAclaracionesModel> quejas = iQueja.findByTrabajadorModelId(id_trabajador);
         return quejas.stream().map(queja -> mapearDTO(queja)).collect(Collectors.toList());
     }
-
+    @Override
+    public List<QuejasDTO> findAllQuejas() {
+        List<QuejasAclaracionesModel> quejas = iQueja.findAll();
+        return quejas.stream().map(queja -> mapearDTO(queja)).collect(Collectors.toList());
+    }
     @Override
     public QuejasDTO findQueja(long id_trabajador, long id_queja) {
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
@@ -64,7 +65,6 @@ public class QuejaServiceImpl implements QuejaService {
         if(!quejasAclaracionesModel.getTrabajadorModel().getId().equals(trabajadorModel.getId())){
             throw new SNRHEException(HttpStatus.BAD_REQUEST,"Esta queja no esta hecha por este trabajador");
         }
-        quejasAclaracionesModel.setCuerpo_queja(quejasDTO.getCuerpo_queja());
         quejasAclaracionesModel.setEstatus_queja(quejasDTO.getEstatus_queja());
 
         return mapearDTO(quejasAclaracionesModel);
@@ -80,12 +80,24 @@ public class QuejaServiceImpl implements QuejaService {
         }
         iQueja.delete(quejasAclaracionesModel);
     }
-    private QuejasDTO mapearDTO(QuejasAclaracionesModel quejasAclaracionesModel){
-        QuejasDTO quejasDTO = modelMapper.map(quejasAclaracionesModel,QuejasDTO.class);
+
+
+    private QuejasDTO mapearDTO(QuejasAclaracionesModel quejasAclaracionesModel) {
+        QuejasDTO quejasDTO = new QuejasDTO();
+        quejasDTO.setEstatus_queja(quejasAclaracionesModel.getEstatus_queja());
+        quejasDTO.setId_queja(quejasAclaracionesModel.getId_queja());
+        quejasDTO.setCuerpo_queja(quejasAclaracionesModel.getCuerpo_queja());
+        quejasDTO.setTipo_Queja(quejasAclaracionesModel.getTipo_Queja());
+        quejasDTO.setFecha_Queja(quejasAclaracionesModel.getFecha_Queja());
         return quejasDTO;
     }
     private QuejasAclaracionesModel mapearEntidad(QuejasDTO quejasDTO){
-        QuejasAclaracionesModel quejasAclaracionesModel = modelMapper.map(quejasDTO,QuejasAclaracionesModel.class);
+        QuejasAclaracionesModel quejasAclaracionesModel = new QuejasAclaracionesModel();
+        quejasAclaracionesModel.setId_queja(quejasDTO.getId_queja());
+        quejasAclaracionesModel.setEstatus_queja(quejasDTO.getEstatus_queja());
+        quejasAclaracionesModel.setFecha_Queja(quejasAclaracionesModel.getFecha_Queja());
+        quejasAclaracionesModel.setTipo_Queja(quejasAclaracionesModel.getTipo_Queja());
+        quejasAclaracionesModel.setCuerpo_queja(quejasDTO.getCuerpo_queja());
         return quejasAclaracionesModel;
     }
 
