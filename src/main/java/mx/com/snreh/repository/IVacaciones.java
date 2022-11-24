@@ -1,6 +1,5 @@
 package mx.com.snreh.repository;
 
-import mx.com.snreh.model.TareaModel;
 import mx.com.snreh.model.VacacionModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 

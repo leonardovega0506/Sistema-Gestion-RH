@@ -12,7 +12,7 @@ public class EventosModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(name = "fecha_evento",nullable = false)
     private Date fecha_evento;

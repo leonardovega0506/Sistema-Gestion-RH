@@ -1,13 +1,12 @@
 package mx.com.snreh.dto;
 
-import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Date;
-@Data
+
 public class QuejasDTO {
 
     private long id_queja;
