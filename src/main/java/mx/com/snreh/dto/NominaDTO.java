@@ -22,8 +22,5 @@ public class NominaDTO {
     private double descuento_retardo;
 
     @NotEmpty
-    private double iva;
-
-    @NotEmpty
     private int retardo_trabajador;
 }

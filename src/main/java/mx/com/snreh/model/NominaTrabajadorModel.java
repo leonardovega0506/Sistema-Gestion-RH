@@ -26,8 +26,6 @@ public class NominaTrabajadorModel {
     @Column(name = "descuento_retardo",nullable = false)
     private double descuento_retardo;
 
-    @Column(name = "iva_trabajador",nullable = false)
-    private double iva;
 
     @Column(name = "cantidad_retardos",nullable = false)
     private int retardo_trabajador;
