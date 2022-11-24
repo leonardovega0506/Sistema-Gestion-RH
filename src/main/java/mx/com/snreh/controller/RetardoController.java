@@ -11,23 +11,29 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/snrhe/trabajadores/{id_trabajador}/retardos/")
+@RequestMapping
 public class RetardoController {
 
     @Autowired
     private RetardoTrabajadorService sRetardo;
 
-    @GetMapping
-    public List<RetardoTrabajadorDTO> listarRetardos(@PathVariable(value = "id_trabajador") long id_trabajador){
-        return sRetardo.obtenerRetardos(id_trabajador);
+    @GetMapping("/snrhe/trabajadores/{id_trabajador}/retardos/")
+    public List<RetardoTrabajadorDTO> listarRetardosTrabajador(@PathVariable(value = "id_trabajador") long id_trabajador){
+        return sRetardo.findRetardosTrabajadorID(id_trabajador);
     }
-    @GetMapping("{id_retardo}")
-    public ResponseEntity<RetardoTrabajadorDTO> obtenerRetardoByID(@PathVariable(value = "id_trabajador")long id_trabajador, @PathVariable(value = "id") long id_retardo){
-        RetardoTrabajadorDTO retardoTrabajadorDTO = sRetardo.obtenberRetardoById(id_trabajador,id_retardo);
+    @GetMapping("/snrhe/trabajadores/{id_trabajador}/retardos/{id_retardo}")
+    public ResponseEntity<RetardoTrabajadorDTO> obtenerRetardoByID(@PathVariable(value = "id_trabajador")long id_trabajador, @PathVariable(value = "id_retardo") long id_retardo){
+        RetardoTrabajadorDTO retardoTrabajadorDTO = sRetardo.findRetardoById(id_trabajador,id_retardo);
         return new ResponseEntity<>(retardoTrabajadorDTO, HttpStatus.OK);
     }
-    @PostMapping
+
+    @GetMapping("/snrhe/retardos/")
+    public List<RetardoTrabajadorDTO> listarRetardosTrabajador(){
+        return sRetardo.findAllRetardos();
+    }
+
+    @PostMapping("/snrhe/trabajadores/{id_trabajador}/retardos/")
     public ResponseEntity<RetardoTrabajadorDTO> generarRetardo(@PathVariable(value = "id_trabajador") long id_trabajador, @Valid @RequestBody RetardoTrabajadorDTO retardoTrabajadorDTO){
-        return new ResponseEntity<>(sRetardo.crearRetardo(id_trabajador,retardoTrabajadorDTO),HttpStatus.CREATED);
+        return new ResponseEntity<>(sRetardo.createRetardo(id_trabajador,retardoTrabajadorDTO),HttpStatus.CREATED);
     }
 }
