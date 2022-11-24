@@ -28,7 +28,7 @@ public class RetardoTrabajadorServiceImpl implements RetardoTrabajadorService {
     private ITrabajador iTrabajador;
 
     @Override
-    public RetardoTrabajadorDTO crearRetardo(long id_trabajador, RetardoTrabajadorDTO retardoTrabajadorDTO) {
+    public RetardoTrabajadorDTO createRetardo(long id_trabajador, RetardoTrabajadorDTO retardoTrabajadorDTO) {
         RetardoTrabajadorModel retardoTrabajadorModel = mapearEntidad(retardoTrabajadorDTO);
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
 
@@ -39,13 +39,18 @@ public class RetardoTrabajadorServiceImpl implements RetardoTrabajadorService {
     }
 
     @Override
-    public List<RetardoTrabajadorDTO> obtenerRetardos(long id_trabajador) {
+    public List<RetardoTrabajadorDTO> findRetardosTrabajadorID(long id_trabajador) {
        List<RetardoTrabajadorModel> retardos = iRetardo.findByTrabajadorModelId(id_trabajador);
        return retardos.stream().map(retardo -> mapearDTO(retardo)).collect(Collectors.toList());
     }
+    @Override
+    public List<RetardoTrabajadorDTO> findAllRetardos() {
+        List<RetardoTrabajadorModel> retardos = iRetardo.findAll();
+        return retardos.stream().map(retardo -> mapearDTO(retardo)).collect(Collectors.toList());
+    }
 
     @Override
-    public RetardoTrabajadorDTO obtenberRetardoById(long id_trabajador, long id_retardo) {
+    public RetardoTrabajadorDTO findRetardoById(long id_trabajador, long id_retardo) {
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
 
         RetardoTrabajadorModel retardoTrabajadorModel = iRetardo.findById(id_retardo).orElseThrow(() -> new ResourceNotFoundException("Retardo","ID",id_retardo));
@@ -56,12 +61,22 @@ public class RetardoTrabajadorServiceImpl implements RetardoTrabajadorService {
         return mapearDTO(retardoTrabajadorModel);
     }
 
+
+
     private RetardoTrabajadorDTO mapearDTO(RetardoTrabajadorModel retardoTrabajadorModel){
-        RetardoTrabajadorDTO retardoTrabajadorDTO = modelMapper.map(retardoTrabajadorModel,RetardoTrabajadorDTO.class);
+        RetardoTrabajadorDTO retardoTrabajadorDTO = new RetardoTrabajadorDTO();
+        retardoTrabajadorDTO.setDescuento_retardo(retardoTrabajadorModel.getDescuento_retardo());
+        retardoTrabajadorDTO.setTiempo_Retardo(retardoTrabajadorModel.getTiempo_Retardo());
+        retardoTrabajadorDTO.setId_retardo(retardoTrabajadorModel.getId_retardo());
+        retardoTrabajadorDTO.setFecha_retardo(retardoTrabajadorModel.getFecha_retardo());
         return  retardoTrabajadorDTO;
     }
     private RetardoTrabajadorModel mapearEntidad(RetardoTrabajadorDTO retardoTrabajadorDTO){
-        RetardoTrabajadorModel retardoTrabajadorModel = modelMapper.map(retardoTrabajadorDTO,RetardoTrabajadorModel.class);
+        RetardoTrabajadorModel retardoTrabajadorModel = new RetardoTrabajadorModel();
+        retardoTrabajadorModel.setFecha_retardo(retardoTrabajadorDTO.getFecha_retardo());
+        retardoTrabajadorModel.setTiempo_Retardo(retardoTrabajadorDTO.getTiempo_Retardo());
+        retardoTrabajadorModel.setDescuento_retardo(retardoTrabajadorDTO.getDescuento_retardo());
+        retardoTrabajadorModel.setId_retardo(retardoTrabajadorModel.getId_retardo());
         return retardoTrabajadorModel;
     }
 }
