@@ -19,9 +19,6 @@ import java.util.stream.Collectors;
 @Service
 public class VacacionesServiceImpl implements VacacionesService {
 
-    @Autowired(required = false)
-    private ModelMapper modelMapper;
-
     @Autowired
     private ITrabajador iTrabajador;
 
@@ -92,12 +89,24 @@ public class VacacionesServiceImpl implements VacacionesService {
 
 
     private VacacionesDTO mapearDTO(VacacionModel vacacionModel){
-        VacacionesDTO vacacionesDTO = modelMapper.map(vacacionModel,VacacionesDTO.class);
+        VacacionesDTO vacacionesDTO = new VacacionesDTO();
+        vacacionesDTO.setId_vacacion(vacacionModel.getId_vacacion());
+        vacacionesDTO.setEstatus_vacacion(vacacionModel.getEstatus_vacacion());
+        vacacionesDTO.setPrima_vacacional(vacacionModel.getPrima_vacacional());
+        vacacionesDTO.setFecha_inicio(vacacionModel.getFecha_inicio());
+        vacacionesDTO.setFecha_fin(vacacionModel.getFecha_fin());
+        vacacionesDTO.setCantidad_dias(vacacionModel.getCantidad_dias());
         return vacacionesDTO;
     }
 
     private VacacionModel mapearEntidad(VacacionesDTO vacacionesDTO){
-        VacacionModel vacacionModel= modelMapper.map(vacacionesDTO,VacacionModel.class);
+        VacacionModel vacacionModel = new VacacionModel();
+        vacacionModel.setId_vacacion(vacacionesDTO.getId_vacacion());
+        vacacionModel.setEstatus_vacacion(vacacionesDTO.getEstatus_vacacion());
+        vacacionModel.setPrima_vacacional(vacacionesDTO.getPrima_vacacional());
+        vacacionModel.setFecha_inicio(vacacionesDTO.getFecha_inicio());
+        vacacionModel.setFecha_fin(vacacionesDTO.getFecha_fin());
+        vacacionModel.setCantidad_dias(vacacionesDTO.getCantidad_dias());
         return vacacionModel;
     }
 }
