@@ -5,7 +5,7 @@ import mx.com.snreh.exception.ResourceNotFoundException;
 import mx.com.snreh.model.TrabajadorModel;
 import mx.com.snreh.repository.ITrabajador;
 import mx.com.snreh.response.TrabajadorRespuesta;
-import mx.com.snreh.service.implementation.interfaces.TrabajadorService;
+import mx.com.snreh.service.interfaces.TrabajadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

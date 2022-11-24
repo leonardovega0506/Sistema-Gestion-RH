@@ -7,7 +7,7 @@ import mx.com.snreh.model.TrabajadorModel;
 import mx.com.snreh.model.VacacionModel;
 import mx.com.snreh.repository.ITrabajador;
 import mx.com.snreh.repository.IVacaciones;
-import mx.com.snreh.service.implementation.interfaces.VacacionesService;
+import mx.com.snreh.service.interfaces.VacacionesService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

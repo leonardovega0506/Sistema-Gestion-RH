@@ -7,7 +7,7 @@ import mx.com.snreh.model.RetardoTrabajadorModel;
 import mx.com.snreh.model.TrabajadorModel;
 import mx.com.snreh.repository.IRetardo;
 import mx.com.snreh.repository.ITrabajador;
-import mx.com.snreh.service.implementation.interfaces.RetardoTrabajadorService;
+import mx.com.snreh.service.interfaces.RetardoTrabajadorService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

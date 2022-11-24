@@ -7,7 +7,7 @@ import mx.com.snreh.model.EventosModel;
 import mx.com.snreh.model.GerenteModel;
 import mx.com.snreh.repository.IEvento;
 import mx.com.snreh.repository.IGerente;
-import mx.com.snreh.service.implementation.interfaces.EventoService;
+import mx.com.snreh.service.interfaces.EventoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
