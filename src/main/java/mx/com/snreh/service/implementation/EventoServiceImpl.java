@@ -41,9 +41,14 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public List<EventoDTO> findAllEventos(long id_gerente) {
+    public List<EventoDTO> findAllEventosGerenteID(long id_gerente) {
         List<EventosModel> eventos = iEvento.findByGerenteModelId(id_gerente);
         return  eventos.stream().map(evento -> mapearDTO(evento)).collect(Collectors.toList());
+    }
+    @Override
+    public List<EventoDTO> findAllEventos() {
+        List<EventosModel> eventosModels = iEvento.findAll();
+        return eventosModels.stream().map(evento -> mapearDTO(evento)).collect(Collectors.toList());
     }
 
     @Override
@@ -73,6 +78,8 @@ public class EventoServiceImpl implements EventoService {
         EventosModel eventoActualizado = iEvento.save(eventosModel);
         return mapearDTO(eventoActualizado);
     }
+
+
 
     @Override
     public void deleteEvento(long id_gerente, long id_evento) {

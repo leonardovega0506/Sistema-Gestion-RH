@@ -7,11 +7,13 @@ import java.util.List;
 public interface EventoService {
     public EventoDTO createEvento(long id_gerente, EventoDTO eventoDTO);
 
-    public List<EventoDTO> findAllEventos(long id_gerente);
+    public List<EventoDTO> findAllEventosGerenteID(long id_gerente);
 
     public EventoDTO findEvento(long id_gerente, long id_evento);
 
     public EventoDTO updateEvento(long id_gerente,long id_evento,EventoDTO eventoDTO);
+
+    public List<EventoDTO> findAllEventos();
 
     public void deleteEvento(long id_gerente, long id_evento);
 }
