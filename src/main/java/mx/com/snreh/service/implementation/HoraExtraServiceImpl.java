@@ -32,17 +32,21 @@ public class HoraExtraServiceImpl implements HoraExtraService {
     public HoraExtraDTO createHoraExtra(Long id_trabajador, HoraExtraDTO horaExtraDTO) {
         HoraExtraModel horaExtraModel = mapearEntidad(horaExtraDTO);
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
-
+        horaExtraModel.setAumento_total(horaExtraModel.getCosto_hora()*horaExtraDTO.getCantidad_horas());
         horaExtraModel.setTrabajadorModel(trabajadorModel);
         HoraExtraModel horaExtraNueva = iHoraExtra.save(horaExtraModel);
-
-
         return mapearDTO(horaExtraNueva);
     }
 
     @Override
-    public List<HoraExtraDTO> finAllHoraExtra(long id_trabajador) {
+    public List<HoraExtraDTO> findAllHoraExtraTrabajadorID(long id_trabajador) {
         List<HoraExtraModel> horasExtras = iHoraExtra.findByTrabajadorModelId(id_trabajador);
+        return horasExtras.stream().map(horaExtra -> mapearDTO(horaExtra)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<HoraExtraDTO> findAllHorasExtra() {
+        List<HoraExtraModel> horasExtras = iHoraExtra.findAll();
         return horasExtras.stream().map(horaExtra -> mapearDTO(horaExtra)).collect(Collectors.toList());
     }
 
@@ -57,12 +61,23 @@ public class HoraExtraServiceImpl implements HoraExtraService {
         return mapearDTO(horaExtraModel);
     }
 
+
     private HoraExtraDTO mapearDTO(HoraExtraModel horaExtraModel){
-        HoraExtraDTO horaExtraDTO = modelMapper.map(horaExtraModel,HoraExtraDTO.class);
+        HoraExtraDTO horaExtraDTO = new HoraExtraDTO();
+        horaExtraDTO.setId_horaExtra(horaExtraModel.getId_horaExtra());
+        horaExtraDTO.setCantidad_horas(horaExtraModel.getCantidad_horas());
+        horaExtraDTO.setFecha_HoraExtra(horaExtraModel.getFecha_HoraExtra());
+        horaExtraDTO.setCosto_hora(horaExtraModel.getCosto_hora());
+        horaExtraDTO.setAumento_total(horaExtraModel.getAumento_total());
         return horaExtraDTO;
     }
     private HoraExtraModel mapearEntidad(HoraExtraDTO horaExtraDTO){
-        HoraExtraModel horaExtraModel = modelMapper.map(horaExtraDTO, HoraExtraModel.class);
+        HoraExtraModel horaExtraModel = new HoraExtraModel();
+        horaExtraModel.setId_horaExtra(horaExtraDTO.getId_horaExtra());
+        horaExtraModel.setCantidad_horas(horaExtraDTO.getCantidad_horas());
+        horaExtraModel.setFecha_HoraExtra(horaExtraDTO.getFecha_HoraExtra());
+        horaExtraModel.setCosto_hora(horaExtraDTO.getCosto_hora());
+        horaExtraModel.setAumento_total(horaExtraDTO.getAumento_total());
         return horaExtraModel;
     }
 }
