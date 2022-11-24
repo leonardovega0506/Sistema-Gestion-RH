@@ -1,5 +1,6 @@
 package mx.com.snreh.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class QuejasAclaracionesModel {
     private long id_queja;
 
     @Column(name = "fecha_queja",nullable = false)
+    @JsonFormat(pattern = "YYYY-MM-dd")
     private Date fecha_Queja;
 
     @Column(name = "tipo_queja",nullable = false)

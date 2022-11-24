@@ -95,8 +95,8 @@ public class QuejaServiceImpl implements QuejaService {
         QuejasAclaracionesModel quejasAclaracionesModel = new QuejasAclaracionesModel();
         quejasAclaracionesModel.setId_queja(quejasDTO.getId_queja());
         quejasAclaracionesModel.setEstatus_queja(quejasDTO.getEstatus_queja());
-        quejasAclaracionesModel.setFecha_Queja(quejasAclaracionesModel.getFecha_Queja());
-        quejasAclaracionesModel.setTipo_Queja(quejasAclaracionesModel.getTipo_Queja());
+        quejasAclaracionesModel.setFecha_Queja(quejasDTO.getFecha_Queja());
+        quejasAclaracionesModel.setTipo_Queja(quejasDTO.getTipo_Queja());
         quejasAclaracionesModel.setCuerpo_queja(quejasDTO.getCuerpo_queja());
         return quejasAclaracionesModel;
     }
