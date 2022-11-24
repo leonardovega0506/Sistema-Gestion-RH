@@ -11,30 +11,34 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/snrhe/trabajadores/{id_trabajador}/tareas/")
+@RequestMapping
 public class TareaController {
 
     @Autowired
     private TareaService sTarea;
 
-    @GetMapping
-    public List<TareaDTO> listarTareas(@PathVariable(value = "id_trabajador") long id_trabajador){
-        return sTarea.obtenerTareasTrabajador(id_trabajador);
+    @GetMapping("/snrhe/trabajadores/{id_trabajador}/tareas/")
+    public List<TareaDTO> listarTareasTrabajador(@PathVariable(value = "id_trabajador") long id_trabajador){
+        return sTarea.findTareasTrabajador(id_trabajador);
     }
-
-    @GetMapping("{id_tarea}")
+    @GetMapping("/snrhe/tareas/")
+    public List<TareaDTO> listarTareasTrabajador(){
+        return sTarea.findAllTareas();
+    }
+    @GetMapping("/snrhe/trabajadores/{id_trabajador}/tareas/{id_tarea}")
     public ResponseEntity<TareaDTO> obtenerTareaByID(@PathVariable(value = "id_trabajador") long id_trabajador,@PathVariable(value = "id_tarea") long id_tarea){
-        TareaDTO tareaDTO = sTarea.obtenerTareaByID(id_trabajador,id_tarea);
+        TareaDTO tareaDTO = sTarea.findTareaByID(id_trabajador,id_tarea);
         return new ResponseEntity<>(tareaDTO, HttpStatus.OK);
     }
-    @PostMapping
+
+    @PostMapping("/snrhe/trabajadores/{id_trabajador}/tareas/")
     public ResponseEntity<TareaDTO> asignarTarea(@PathVariable(value = "id_trabajador") long id_trabajador, @Valid @RequestBody TareaDTO tareaDTO){
-        return new ResponseEntity<>(sTarea.crearTarea(id_trabajador,tareaDTO),HttpStatus.CREATED);
+        return new ResponseEntity<>(sTarea.createTarea(id_trabajador,tareaDTO),HttpStatus.CREATED);
     }
 
-    @PutMapping("{id_tarea}")
+    @PutMapping("/snrhe/trabajadores/{id_trabajador}/tareas/{id_tarea}")
     public ResponseEntity<TareaDTO> actualizarTarea(@PathVariable(value = "id_trabajador") long id_trabajador,@PathVariable(value = "id_tarea") long id_tarea,@Valid @RequestBody TareaDTO tareaDTO){
-        TareaDTO tareaActualizada = sTarea.actualizarTarea(id_trabajador,id_tarea,tareaDTO);
+        TareaDTO tareaActualizada = sTarea.updateTarea(id_trabajador,id_tarea,tareaDTO);
         return new ResponseEntity<>(tareaActualizada,HttpStatus.NO_CONTENT);
     }
 }

@@ -63,9 +63,10 @@ public class TareaServiceImpl implements TareaService {
         TareaModel tareaModel = iTarea.findById(id_tarea).orElseThrow(() -> new ResourceNotFoundException("Tarea","Id_tarea",id_tarea));
         if(tareaModel.getTrabajadorModel().getId() == trabajadorModel.getId()){
             trabajadorModel.setEstatus("Libre");
+            tareaModel.setTrabajadorModel(trabajadorModel);
             tareaModel.setEstatus(tareaDTO.getEstatus());
             tareaModel.setFecha(tareaDTO.getFecha());
-            tareaModel.setTrabajadorModel(trabajadorModel);
+            tareaModel.setNombre(tareaDTO.getNombre());
             TareaModel tareaActualizada = iTarea.save(tareaModel);
             return mapearDTO(tareaActualizada);
         }
@@ -90,7 +91,7 @@ public class TareaServiceImpl implements TareaService {
         tareaModel.setId_Tarea(tareaDTO.getId_Tarea());
         tareaModel.setFecha(tareaDTO.getFecha());
         tareaModel.setEstatus(tareaDTO.getEstatus());
-        tareaModel.setNombre(tareaModel.getNombre());
+        tareaModel.setNombre(tareaDTO.getNombre());
 
         return tareaModel;
     }
