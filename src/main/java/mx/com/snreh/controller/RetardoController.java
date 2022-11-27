@@ -5,6 +5,7 @@ import mx.com.snreh.service.interfaces.RetardoTrabajadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,6 +33,7 @@ public class RetardoController {
         return sRetardo.findAllRetardos();
     }
 
+    @PreAuthorize("hasRole('GERENTE')")
     @PostMapping("/snrhe/trabajadores/{id_trabajador}/retardos/")
     public ResponseEntity<RetardoTrabajadorDTO> generarRetardo(@PathVariable(value = "id_trabajador") long id_trabajador, @Valid @RequestBody RetardoTrabajadorDTO retardoTrabajadorDTO){
         return new ResponseEntity<>(sRetardo.createRetardo(id_trabajador,retardoTrabajadorDTO),HttpStatus.CREATED);

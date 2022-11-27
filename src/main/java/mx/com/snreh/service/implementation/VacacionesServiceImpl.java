@@ -65,15 +65,39 @@ public class VacacionesServiceImpl implements VacacionesService {
         if(!vacacionModel.getTrabajadorModel().getId().equals(trabajadorModel.getId())){
             throw new SNRHEException(HttpStatus.BAD_REQUEST,"Esta vacacion no esta asociada al trabajador");
         }
-        trabajadorModel.setEstatus("En Vacaciones");
-        vacacionModel.setEstatus_vacacion(vacacionesDTO.getEstatus_vacacion());
-        vacacionModel.setPrima_vacacional(vacacionesDTO.getPrima_vacacional());
-        vacacionModel.setFecha_inicio(vacacionesDTO.getFecha_inicio());
-        vacacionModel.setFecha_fin(vacacionModel.getFecha_inicio());
-        vacacionModel.setCantidad_dias(vacacionesDTO.getCantidad_dias());
+        if(vacacionModel.getEstatus_vacacion().equals("Aprobada")){
+            trabajadorModel.setEstatus("En Vacaciones");
+            vacacionModel.setEstatus_vacacion(vacacionesDTO.getEstatus_vacacion());
+            vacacionModel.setPrima_vacacional(vacacionesDTO.getPrima_vacacional());
+            vacacionModel.setFecha_inicio(vacacionesDTO.getFecha_inicio());
+            vacacionModel.setFecha_fin(vacacionModel.getFecha_inicio());
+            vacacionModel.setCantidad_dias(vacacionesDTO.getCantidad_dias());
+            VacacionModel vacacionActualizada = iVacaciones.save(vacacionModel);
+            return mapearDTO(vacacionActualizada);
+        }
+        else if(vacacionModel.getEstatus_vacacion().equals("Pendiente")){
+            vacacionModel.setEstatus_vacacion(vacacionesDTO.getEstatus_vacacion());
+            vacacionModel.setPrima_vacacional(vacacionesDTO.getPrima_vacacional());
+            vacacionModel.setFecha_inicio(vacacionesDTO.getFecha_inicio());
+            vacacionModel.setFecha_fin(vacacionModel.getFecha_inicio());
+            vacacionModel.setCantidad_dias(vacacionesDTO.getCantidad_dias());
+            VacacionModel vacacionActualizada = iVacaciones.save(vacacionModel);
+            return mapearDTO(vacacionActualizada);
+        }
+        else if(vacacionModel.getEstatus_vacacion().equals("Rechazada")){
+            trabajadorModel.setEstatus("Libre");
+            vacacionModel.setPrima_vacacional(vacacionesDTO.getPrima_vacacional());
+            vacacionModel.setFecha_inicio(vacacionesDTO.getFecha_inicio());
+            vacacionModel.setFecha_fin(vacacionModel.getFecha_inicio());
+            vacacionModel.setCantidad_dias(vacacionesDTO.getCantidad_dias());
+            VacacionModel vacacionActualizada = iVacaciones.save(vacacionModel);
+            return mapearDTO(vacacionActualizada);
+        }
+    else{
+        return null;
+        }
 
-        VacacionModel vacacionActualizada = iVacaciones.save(vacacionModel);
-        return mapearDTO(vacacionActualizada);
+
     }
 
     @Override

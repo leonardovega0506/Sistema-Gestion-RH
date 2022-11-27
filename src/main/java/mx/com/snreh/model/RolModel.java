@@ -15,6 +15,6 @@ public class RolModel {
     private long id_rol;
 
     @Column(name = "nombre_rol",length = 60,nullable = false)
-    private String nombre_rol;
+    private String nombre;
 
 }

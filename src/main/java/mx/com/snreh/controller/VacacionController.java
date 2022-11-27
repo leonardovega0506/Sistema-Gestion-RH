@@ -5,6 +5,7 @@ import mx.com.snreh.service.interfaces.VacacionesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,6 +28,7 @@ public class VacacionController {
         VacacionesDTO vacacionesDTO = sVacaciones.findVacaciones(id_trabajador,id_vacaciones);
         return new ResponseEntity<>(vacacionesDTO, HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('GERENTE')")
     @GetMapping("/snrhe/vacaciones/")
     public List<VacacionesDTO> listarVacaciones(){
         return sVacaciones.findAllVacaciones();
@@ -37,11 +39,13 @@ public class VacacionController {
         return new ResponseEntity<>(sVacaciones.createVacacion(id_trabajador,vacacionesDTO),HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('GERENTE')")
     @PutMapping("/snrhe/trabajadores/{id_trabajador}/vacaciones/{id_vacaciones}")
     public ResponseEntity<VacacionesDTO> actualizarVacaciones(@PathVariable(value = "id_trabajador") long id_trabajador,@PathVariable(value = "id_vacaciones") long id_vacaciones,@Valid @RequestBody VacacionesDTO vacacionesDTO){
         VacacionesDTO vacacionActualizada = sVacaciones.updateVacaciones(id_trabajador,id_vacaciones,vacacionesDTO);
         return new ResponseEntity<>(vacacionActualizada,HttpStatus.NO_CONTENT);
     }
+    @PreAuthorize("hasRole('GERENTE')")
     @DeleteMapping("/snrhe/trabajadores/{id_trabajador}/vacaciones/{id_vacaciones}")
     public ResponseEntity<String> borrarVacaciones(@PathVariable(value = "id_trabajador") long id_trabajador,@PathVariable(value = "id_vacaciones") long id_vacaciones){
         sVacaciones.deleteVacaciones(id_trabajador,id_vacaciones);

@@ -5,6 +5,7 @@ import mx.com.snreh.service.interfaces.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,11 +32,13 @@ public class TareaController {
         return new ResponseEntity<>(tareaDTO, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('GERENTE')")
     @PostMapping("/snrhe/trabajadores/{id_trabajador}/tareas/")
     public ResponseEntity<TareaDTO> asignarTarea(@PathVariable(value = "id_trabajador") long id_trabajador, @Valid @RequestBody TareaDTO tareaDTO){
         return new ResponseEntity<>(sTarea.createTarea(id_trabajador,tareaDTO),HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('GERENTE')")
     @PutMapping("/snrhe/trabajadores/{id_trabajador}/tareas/{id_tarea}")
     public ResponseEntity<TareaDTO> actualizarTarea(@PathVariable(value = "id_trabajador") long id_trabajador,@PathVariable(value = "id_tarea") long id_tarea,@Valid @RequestBody TareaDTO tareaDTO){
         TareaDTO tareaActualizada = sTarea.updateTarea(id_trabajador,id_tarea,tareaDTO);

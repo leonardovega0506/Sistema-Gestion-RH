@@ -7,6 +7,7 @@ import mx.com.snreh.util.ConstantesGlobales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,17 +30,20 @@ public class TurnosController {
         return ResponseEntity.ok(sTurnos.findTurnoBy(id_turno));
     }
 
+    @PreAuthorize("hasRole('GERENTE')")
     @PostMapping
     public ResponseEntity<TurnosDTO> generarTurno(@RequestBody TurnosDTO turnosDTO){
         return new ResponseEntity<>(sTurnos.createTurno(turnosDTO), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('GERENTE')")
     @PutMapping("/{id}")
     public ResponseEntity<TurnosDTO> actualizarTurno(@PathVariable(name = "id") long id_turno,@Valid @RequestBody TurnosDTO turnosDTO){
         TurnosDTO turnoRespuesta = sTurnos.updateTurno(id_turno,turnosDTO);
         return new ResponseEntity<>(turnoRespuesta,HttpStatus.NO_CONTENT);
     }
 
+    @PreAuthorize("hasRole('GERENTE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarTurni(@PathVariable(name = "id") long id_turno){
         sTurnos.deleteTurno(id_turno);

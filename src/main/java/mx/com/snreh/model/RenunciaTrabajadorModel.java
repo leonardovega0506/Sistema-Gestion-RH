@@ -25,6 +25,8 @@ public class RenunciaTrabajadorModel {
 
     private int tiempoTrabajado;
 
+    private String estatusRenuncia;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_trabajador")
     private TrabajadorModel trabajadorModel;

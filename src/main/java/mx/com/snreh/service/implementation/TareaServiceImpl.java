@@ -28,10 +28,16 @@ public class TareaServiceImpl implements TareaService {
     public TareaDTO createTarea(long id_trabajador, TareaDTO tareaDTO) {
         TareaModel tareaModel = mapearEntidad(tareaDTO);
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",id_trabajador));
-        trabajadorModel.setEstatus("Ocupado");
-        tareaModel.setTrabajadorModel(trabajadorModel);
-        TareaModel nuevaTarea = iTarea.save(tareaModel);
-        return mapearDTO(nuevaTarea);
+        if(trabajadorModel.getEstatus().equals("Ocupado")||trabajadorModel.getEstatus().equals("Baja")||trabajadorModel.getEstatus().equals("En Vacaciones")||trabajadorModel.getEstatus().equals("Pendiente de baja")||trabajadorModel.getEstatus().equals("Permiso")||trabajadorModel.getEstatus().equals("Incapacitado")){
+            return null;
+        }
+        else{
+            trabajadorModel.setEstatus("Ocupado");
+            tareaModel.setTrabajadorModel(trabajadorModel);
+            TareaModel nuevaTarea = iTarea.save(tareaModel);
+            return mapearDTO(nuevaTarea);
+        }
+
     }
 
     @Override
@@ -62,13 +68,24 @@ public class TareaServiceImpl implements TareaService {
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",id_trabajador));
         TareaModel tareaModel = iTarea.findById(id_tarea).orElseThrow(() -> new ResourceNotFoundException("Tarea","Id_tarea",id_tarea));
         if(tareaModel.getTrabajadorModel().getId() == trabajadorModel.getId()){
-            trabajadorModel.setEstatus("Libre");
-            tareaModel.setTrabajadorModel(trabajadorModel);
-            tareaModel.setEstatus(tareaDTO.getEstatus());
-            tareaModel.setFecha(tareaDTO.getFecha());
-            tareaModel.setNombre(tareaDTO.getNombre());
-            TareaModel tareaActualizada = iTarea.save(tareaModel);
-            return mapearDTO(tareaActualizada);
+            if(tareaModel.getEstatus().equals("Terminada")){
+                trabajadorModel.setEstatus("Libre");
+                tareaModel.setTrabajadorModel(trabajadorModel);
+                tareaModel.setEstatus(tareaDTO.getEstatus());
+                tareaModel.setFecha(tareaDTO.getFecha());
+                tareaModel.setNombre(tareaDTO.getNombre());
+                TareaModel tareaActualizada = iTarea.save(tareaModel);
+                return mapearDTO(tareaActualizada);
+            }
+            else{
+                tareaModel.setTrabajadorModel(trabajadorModel);
+                tareaModel.setEstatus(tareaDTO.getEstatus());
+                tareaModel.setFecha(tareaDTO.getFecha());
+                tareaModel.setNombre(tareaDTO.getNombre());
+                TareaModel tareaActualizada = iTarea.save(tareaModel);
+                return mapearDTO(tareaActualizada);
+            }
+
         }
         else {
             throw new SNRHEException(HttpStatus.BAD_REQUEST,"Esta tarea no esta asignada a este trabajador");

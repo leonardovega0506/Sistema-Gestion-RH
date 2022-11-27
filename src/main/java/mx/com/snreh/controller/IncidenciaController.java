@@ -5,6 +5,7 @@ import mx.com.snreh.service.interfaces.IncidenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,11 +17,13 @@ public class IncidenciaController {
     @Autowired
     private IncidenciaService sIncidencia;
 
+    @PreAuthorize("hasRole('GERENTE')")
     @GetMapping
     public List<IncidenciaDTO> listarIncidencias(@PathVariable(value = "id_trabajador") Long id_trabajador){
         return sIncidencia.findAllInciencias(id_trabajador);
     }
 
+    @PreAuthorize("hasRole('GERENTE')")
     @GetMapping("{id_incidencia}")
     public ResponseEntity<IncidenciaDTO> obtenerIncidencia(@PathVariable(value = "id_trabajador") Long id_trabajador, @PathVariable(value = "id_incidencia") long id_incidencia){
         IncidenciaDTO incidenciaDTO = sIncidencia.findIncidencia(id_trabajador,id_incidencia);

@@ -6,6 +6,7 @@ import mx.com.snreh.service.interfaces.NominaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,15 +29,18 @@ public class NominaController {
         NominaDTO nominaDTO = sNomina.findNominaByID(id_trabajador,id_nomina);
         return new ResponseEntity<>(nominaDTO, HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('GERENTE')")
     @GetMapping("/snrhe/nominas/")
     public List<NominaDTO> listarnominas(){
         return sNomina.findAllNominas();
     }
 
+    @PreAuthorize("hasRole('GERENTE')")
     @PostMapping("/snrhe/trabajadores/{id_trabajador}/nominas/")
     public ResponseEntity<NominaDTO> crearNomina(@PathVariable(value = "id_trabajador") long id_trabajador, @Valid @RequestBody NominaDTO nominaDTO){
         return new ResponseEntity<>(sNomina.createNomina(id_trabajador,nominaDTO),HttpStatus.CREATED);
     }
+    @PreAuthorize("hasRole('GERENTE')")
     @PutMapping("/snrhe/trabajadores/{id_trabajador}/nominas/{id_nomina}")
     public ResponseEntity<NominaDTO> actualizarNomina(@PathVariable(value = "id_trabajador") long id_trabajador,@PathVariable(value = "id_nomina") long id_nomina,@Valid @RequestBody NominaDTO nominaDTO){
         NominaDTO noominaActualiza = sNomina.updateNomina(id_trabajador,id_nomina,nominaDTO);

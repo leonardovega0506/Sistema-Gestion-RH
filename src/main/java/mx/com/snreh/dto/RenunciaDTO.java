@@ -21,4 +21,6 @@ public class RenunciaDTO {
 
     @NotEmpty
     private long tiempoTrabajado;
+
+    private String estatusRenuncia;
 }

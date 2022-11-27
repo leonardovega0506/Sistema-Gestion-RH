@@ -39,7 +39,8 @@ public class RenunciaServiceImpl implements RenunciaService {
     public RenunciaDTO createRenuncia(long id_trabajador, RenunciaDTO renunciaDTO) {
         RenunciaTrabajadorModel renunciaTrabajadorModel = mapearEntidad(renunciaDTO);
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
-        trabajadorModel.setEstatus("Pendiente de renuncia");
+        trabajadorModel.setEstatus("Pendiente de baja");
+        renunciaTrabajadorModel.setEstatusRenuncia("Pendiente");
         renunciaTrabajadorModel.setTrabajadorModel(trabajadorModel);
         renunciaTrabajadorModel.setFiniquito(obtenerFiniquito(id_trabajador,renunciaDTO));
         RenunciaTrabajadorModel renuncia = iRenuncia.save(renunciaTrabajadorModel);
@@ -65,13 +66,19 @@ public class RenunciaServiceImpl implements RenunciaService {
         if(!renunciaTrabajadorModel.getTrabajadorModel().getId().equals(trabajadorModel.getId())){
             throw new SNRHEException(HttpStatus.BAD_REQUEST,"No es posible recuperar esa hoja de renuncia");
         }
-        trabajadorModel.setEstatus("Baja");
-        renunciaTrabajadorModel.setFiniquito(renunciaDTO.getFiniquito());
+        if(renunciaTrabajadorModel.getEstatusRenuncia().equals("Finalizado")){
+            trabajadorModel.setEstatus("Baja");
+            renunciaTrabajadorModel.setFiniquito(renunciaDTO.getFiniquito());
 
-        TrabajadorModel trabajadorActualizado = iTrabajador.save(trabajadorModel);
-        RenunciaTrabajadorModel renunciaActualizada = iRenuncia.save(renunciaTrabajadorModel);
+            TrabajadorModel trabajadorActualizado = iTrabajador.save(trabajadorModel);
+            RenunciaTrabajadorModel renunciaActualizada = iRenuncia.save(renunciaTrabajadorModel);
 
-        return mapearDTO(renunciaActualizada);
+            return mapearDTO(renunciaActualizada);
+        }
+        else{
+            return null;
+        }
+
     }
 
     private RenunciaDTO mapearDTO(RenunciaTrabajadorModel renunciaTrabajadorModel){

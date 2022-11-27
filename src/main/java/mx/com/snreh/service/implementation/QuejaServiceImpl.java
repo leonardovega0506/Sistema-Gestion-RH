@@ -29,11 +29,16 @@ public class QuejaServiceImpl implements QuejaService {
     public QuejasDTO createQueja(long id_trabajador, QuejasDTO quejasDTO) {
         QuejasAclaracionesModel quejasAclaracionesModel= mapearEntidad(quejasDTO);
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
+        if(trabajadorModel.getEstatus().equals("Baja")||trabajadorModel.getEstatus().equals("En Vacaciones")||trabajadorModel.getEstatus().equals("Pendiente de baja")){
+            return null;
+        }
+        else{
+            quejasAclaracionesModel.setTrabajadorModel(trabajadorModel);
+            QuejasAclaracionesModel nuevaQueja = iQueja.save(quejasAclaracionesModel);
 
-        quejasAclaracionesModel.setTrabajadorModel(trabajadorModel);
-        QuejasAclaracionesModel nuevaQueja = iQueja.save(quejasAclaracionesModel);
+            return mapearDTO(nuevaQueja);
+        }
 
-        return mapearDTO(nuevaQueja);
     }
 
     @Override

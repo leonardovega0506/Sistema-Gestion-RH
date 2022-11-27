@@ -10,11 +10,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private IUsuario iUsuario;
@@ -28,6 +30,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> mapearRoles(Set<RolModel> roles){
-        return roles.stream().map(rol -> new SimpleGrantedAuthority(rol.getNombre_rol())).collect(Collectors.toList());
+        return roles.stream().map(rol -> new SimpleGrantedAuthority(rol.getNombre())).collect(Collectors.toList());
     }
 }

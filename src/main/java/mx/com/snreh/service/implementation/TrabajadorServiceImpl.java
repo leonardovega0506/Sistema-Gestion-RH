@@ -55,18 +55,24 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     @Override
     public TrabajadorDTO actualizarTrabajador(TrabajadorDTO trabajadorDTO, long id) {
         TrabajadorModel trabajadorModel = iTrabajador.findById(id).orElseThrow(() -> new ResourceNotFoundException("Trabajador","Numero_trabajador",id));
+        if(trabajadorModel.getEstatus().equals("Baja")||trabajadorModel.getEstatus().equals("Pendiente de baja")){
+            return null;
+        }
+        else{
 
-        trabajadorModel.setNombre_trabajador(trabajadorDTO.getNombre_trabajador());
-        trabajadorModel.setApellidoP_trabajador(trabajadorDTO.getApellidoP_trabajador());
-        trabajadorModel.setApellidoM_trabajador(trabajadorDTO.getApellido_Mtrabajador());
-        trabajadorModel.setPuesto(trabajadorDTO.getPuesto());
-        trabajadorModel.setSueldo(trabajadorDTO.getSueldo());
-        trabajadorModel.setCelular(trabajadorDTO.getCelular());
-        trabajadorModel.setCorreo_electronico(trabajadorDTO.getCorreo_electronico());
-        trabajadorModel.setNumero_trabajador(trabajadorDTO.getNumeroTrabajador());
-        TrabajadorModel trabajadorActualizado = iTrabajador.save(trabajadorModel);
 
-        return mapearDTO(trabajadorActualizado);
+            trabajadorModel.setNombre_trabajador(trabajadorDTO.getNombre_trabajador());
+            trabajadorModel.setApellidoP_trabajador(trabajadorDTO.getApellidoP_trabajador());
+            trabajadorModel.setApellidoM_trabajador(trabajadorDTO.getApellido_Mtrabajador());
+            trabajadorModel.setPuesto(trabajadorDTO.getPuesto());
+            trabajadorModel.setSueldo(trabajadorDTO.getSueldo());
+            trabajadorModel.setCelular(trabajadorDTO.getCelular());
+            trabajadorModel.setCorreo_electronico(trabajadorDTO.getCorreo_electronico());
+            trabajadorModel.setNumero_trabajador(trabajadorDTO.getNumeroTrabajador());
+            TrabajadorModel trabajadorActualizado = iTrabajador.save(trabajadorModel);
+
+            return mapearDTO(trabajadorActualizado);
+        }
     }
 
     @Override

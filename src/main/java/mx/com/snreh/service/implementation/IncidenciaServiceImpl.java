@@ -32,10 +32,14 @@ public class IncidenciaServiceImpl implements IncidenciaService {
     public IncidenciaDTO createIncidencia(Long id_trabajador, IncidenciaDTO incidenciaDTO) {
         IncidenciaModel incidenciaModel = mapearEntidad(incidenciaDTO);
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
-
-        incidenciaModel.setTrabajadorModel(trabajadorModel);
-        IncidenciaModel nuevaIncidencia = incidenciaI.save(incidenciaModel);
-        return mapearDTO(nuevaIncidencia);
+        if(trabajadorModel.getEstatus().equals("Baja")||trabajadorModel.getEstatus().equals("Pendiente de baja")){
+            return null;
+        }
+        else {
+            incidenciaModel.setTrabajadorModel(trabajadorModel);
+            IncidenciaModel nuevaIncidencia = incidenciaI.save(incidenciaModel);
+            return mapearDTO(nuevaIncidencia);
+        }
     }
 
     @Override

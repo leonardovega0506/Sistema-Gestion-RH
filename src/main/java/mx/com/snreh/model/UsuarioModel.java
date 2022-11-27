@@ -26,6 +26,6 @@ public class UsuarioModel {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinTable(name = "usuario_roles",joinColumns = @JoinColumn(name = "usuario_id",referencedColumnName ="id_usuario"),inverseJoinColumns = @JoinColumn(name = "rol_id",referencedColumnName = "id_usuario"))
+    @JoinTable(name = "usuario_roles",joinColumns = @JoinColumn(name = "usuario_id",referencedColumnName ="id_usuario"),inverseJoinColumns = @JoinColumn(name = "rol_id",referencedColumnName = "rol_id"))
     private Set<RolModel> roles = new HashSet<>();
 }

@@ -41,12 +41,18 @@ public class NominaServiceImpl implements NominaService {
     public NominaDTO createNomina(long id_trabajador, NominaDTO nominaDTO) {
         NominaTrabajadorModel nominaTrabajadorModel = mapearEntidad(nominaDTO);
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
-        nominaTrabajadorModel.setTrabajadorModel(trabajadorModel);
-        nominaTrabajadorModel.setNomina_trabajador(calcularNomina(id_trabajador,nominaDTO));
-        nominaTrabajadorModel.setDescuento_retardo(calcularDescuenbstos(id_trabajador));
-        nominaTrabajadorModel.setIsr(escogerISR(id_trabajador));
-        NominaTrabajadorModel nominaNueva = iNomina.save(nominaTrabajadorModel);
-        return mapearDTO(nominaNueva);
+        if(trabajadorModel.getEstatus().equals("Baja")||trabajadorModel.getEstatus().equals("Pendiente de baja")){
+            return null;
+        }
+        else{
+            nominaTrabajadorModel.setTrabajadorModel(trabajadorModel);
+            nominaTrabajadorModel.setNomina_trabajador(calcularNomina(id_trabajador,nominaDTO));
+            nominaTrabajadorModel.setDescuento_retardo(calcularDescuenbstos(id_trabajador));
+            nominaTrabajadorModel.setIsr(escogerISR(id_trabajador));
+            NominaTrabajadorModel nominaNueva = iNomina.save(nominaTrabajadorModel);
+            return mapearDTO(nominaNueva);
+        }
+
 
     }
 

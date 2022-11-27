@@ -30,12 +30,19 @@ public class HoraExtraServiceImpl implements HoraExtraService {
 
     @Override
     public HoraExtraDTO createHoraExtra(Long id_trabajador, HoraExtraDTO horaExtraDTO) {
+
         HoraExtraModel horaExtraModel = mapearEntidad(horaExtraDTO);
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
-        horaExtraModel.setAumento_total(horaExtraModel.getCosto_hora()*horaExtraDTO.getCantidad_horas());
-        horaExtraModel.setTrabajadorModel(trabajadorModel);
-        HoraExtraModel horaExtraNueva = iHoraExtra.save(horaExtraModel);
-        return mapearDTO(horaExtraNueva);
+        if(trabajadorModel.getEstatus().equals("Baja")||trabajadorModel.getEstatus().equals("En Vacaciones")||trabajadorModel.getEstatus().equals("Pendiente de baja")||trabajadorModel.getEstatus().equals("Permiso")||trabajadorModel.getEstatus().equals("Incapacitado")){
+            return null;
+        }
+        else{
+            horaExtraModel.setAumento_total(horaExtraModel.getCosto_hora()*horaExtraDTO.getCantidad_horas());
+            horaExtraModel.setTrabajadorModel(trabajadorModel);
+            HoraExtraModel horaExtraNueva = iHoraExtra.save(horaExtraModel);
+            return mapearDTO(horaExtraNueva);
+        }
+
     }
 
     @Override

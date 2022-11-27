@@ -13,6 +13,7 @@ import java.util.Set;
 public class TrabajadorModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_trabajador",nullable = false)
     private Long id;
 
     @Column(name = "numero_trabajador",nullable = false)
@@ -66,8 +67,4 @@ public class TrabajadorModel {
     @OneToMany(mappedBy = "trabajadorModel",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<VacacionModel> listaVacaciones = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "turnos_trabajadores",joinColumns = @JoinColumn(name = "id_trabajador", referencedColumnName = "id_trabajador"),inverseJoinColumns = @JoinColumn(name = "id_turno",referencedColumnName = "id_turno"))
-    @JsonBackReference
-    private Set<TurnosModel> turnos = new HashSet<>();
 }

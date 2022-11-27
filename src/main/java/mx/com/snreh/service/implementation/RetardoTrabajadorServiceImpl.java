@@ -31,11 +31,17 @@ public class RetardoTrabajadorServiceImpl implements RetardoTrabajadorService {
     public RetardoTrabajadorDTO createRetardo(long id_trabajador, RetardoTrabajadorDTO retardoTrabajadorDTO) {
         RetardoTrabajadorModel retardoTrabajadorModel = mapearEntidad(retardoTrabajadorDTO);
         TrabajadorModel trabajadorModel = iTrabajador.findById(id_trabajador).orElseThrow(() -> new ResourceNotFoundException("Trabajador","ID",id_trabajador));
+        if(trabajadorModel.getEstatus().equals("Baja")||trabajadorModel.getEstatus().equals("En Vacaciones")||trabajadorModel.getEstatus().equals("Pendiente de baja")||trabajadorModel.getEstatus().equals("Permiso")||trabajadorModel.getEstatus().equals("Incapacitado")){
+            return null;
+        }
+        else{
+            retardoTrabajadorModel.setTrabajadorModel(trabajadorModel);
+            RetardoTrabajadorModel retardoNuevo = iRetardo.save(retardoTrabajadorModel);
+            return mapearDTO(retardoNuevo);
+        }
 
-        retardoTrabajadorModel.setTrabajadorModel(trabajadorModel);
-        RetardoTrabajadorModel retardoNuevo = iRetardo.save(retardoTrabajadorModel);
 
-        return mapearDTO(retardoNuevo);
+
     }
 
     @Override
